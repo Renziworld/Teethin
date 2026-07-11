@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Cusp & Clove Dental Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1c231f; --cream:#f6f1e7; --paper:#fffdf9;
+    --teal:#24463a; --teal-deep:#182f27; --sage:#dce6da; --sage-line:#c3d2c0;
+    --gold:#b8863b; --gold-deep:#93692a; --rust:#a6503a; --muted:#5c645e;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:'Inter',sans-serif;}
+  h1,h2{font-family:'Fraunces',serif;color:var(--teal-deep);margin:0;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .wrap{max-width:1100px;margin:0 auto;padding:32px 24px 80px;}
+  button{font-family:inherit;cursor:pointer;}
+  input{font-family:inherit;}
+  :focus-visible{outline:3px solid var(--gold);outline-offset:2px;}
+
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;flex-wrap:wrap;gap:12px;}
+  .btn{border-radius:999px;border:1px solid var(--teal);background:transparent;color:var(--teal);padding:9px 18px;font-weight:600;font-size:13.5px;}
+  .btn:hover{background:var(--teal);color:var(--paper);}
+  .btn-gold{background:var(--gold);border-color:var(--gold);color:var(--paper);}
+  .btn-gold:hover{background:var(--gold-deep);border-color:var(--gold-deep);}
+  .btn-rust{border-color:var(--rust);color:var(--rust);}
+  .btn-rust:hover{background:var(--rust);color:var(--paper);}
+  .btn-small{padding:6px 12px;font-size:12.5px;border-radius:8px;}
+
+  /* login */
+  .login-box{
+    max-width:360px;margin:80px auto;background:var(--paper);border:1px solid var(--sage-line);
+    border-radius:16px;padding:32px;text-align:center;
+  }
+  .login-box h1{font-size:22px;margin-bottom:6px;}
+  .login-box p{color:var(--muted);font-size:13.5px;margin:0 0 20px;}
+  .login-box input{width:100%;padding:11px 13px;border:1.5px solid var(--sage-line);border-radius:10px;margin-bottom:12px;font-size:14.5px;}
+  .login-box .err{color:var(--rust);font-size:13px;margin-bottom:10px;min-height:16px;}
+
+  /* dashboard */
+  #dashboard{display:none;}
+  .stat-row{display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap;}
+  .stat{background:var(--paper);border:1px solid var(--sage-line);border-radius:12px;padding:14px 20px;min-width:120px;}
+  .stat .n{font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:600;color:var(--teal-deep);}
+  .stat .l{font-size:12px;color:var(--muted);}
+
+  .filters{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
+  .filters button{background:var(--paper);border:1.5px solid var(--sage-line);border-radius:999px;padding:7px 16px;font-size:13px;font-weight:600;color:var(--muted);}
+  .filters button.active{border-color:var(--teal);color:var(--teal-deep);background:var(--sage);}
+
+  table{width:100%;border-collapse:collapse;background:var(--paper);border:1px solid var(--sage-line);border-radius:12px;overflow:hidden;}
+  thead th{text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);padding:12px 14px;border-bottom:1px solid var(--sage-line);}
+  tbody td{padding:12px 14px;font-size:13.5px;border-bottom:1px solid var(--sage-line);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  .code{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--teal-deep);}
+  .status-pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11.5px;font-weight:600;}
+  .status-confirmed{background:var(--sage);color:var(--teal-deep);}
+  .status-completed{background:#e2e8e4;color:var(--muted);}
+  .status-cancelled{background:#f2ddd6;color:var(--rust);}
+  .row-actions{display:flex;gap:8px;flex-wrap:wrap;}
+  .empty{padding:40px;text-align:center;color:var(--muted);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="login-box" id="loginBox">
+    <h1>Cusp &amp; Clove</h1>
+    <p>Staff sign-in</p>
+    <div class="err" id="loginErr"></div>
+    <input type="email" id="loginEmail" placeholder="Email" autocomplete="username">
+    <input type="password" id="loginPass" placeholder="Password" autocomplete="current-password">
+    <button class="btn btn-gold" id="loginBtn" style="width:100%;">Sign in</button>
+  </div>
+
+  <div id="dashboard">
+    <header>
+      <h1>Appointments</h1>
+      <button class="btn" id="logoutBtn">Sign out</button>
+    </header>
+
+    <div class="stat-row" id="statRow"></div>
+
+    <div class="filters" id="filters">
+      <button data-f="upcoming" class="active">Upcoming</button>
+      <button data-f="all">All</button>
+      <button data-f="confirmed">Confirmed</button>
+      <button data-f="completed">Completed</button>
+      <button data-f="cancelled">Cancelled</button>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>Code</th><th>Patient</th><th>Service</th><th>When</th><th>Status</th><th>Notes</th><th></th></tr>
+      </thead>
+      <tbody id="bookingsBody"></tbody>
+    </table>
+    <div class="empty" id="emptyState" style="display:none;">No bookings match this filter.</div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script>
+// Use the exact same config as index.html — same Firebase project.
+const firebaseConfig = {
+  apiKey: "AIzaSyBn8pjNEiv5f9Mfyjpltc6Cssv78VYDfWU",
+  authDomain: "teething-bfb01.firebaseapp.com",
+  projectId: "teething-bfb01",
+  storageBucket: "teething-bfb01.firebasestorage.app",
+  messagingSenderId: "126608909426",
+  appId: "1:126608909426:web:d650413fe5612ed2d10eeb"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const auth = firebase.auth();
+
+let allBookings = [];
+let currentFilter = 'upcoming';
+
+const loginBox = document.getElementById('loginBox');
+const dashboard = document.getElementById('dashboard');
+const loginErr = document.getElementById('loginErr');
+
+document.getElementById('loginBtn').addEventListener('click', async ()=>{
+  loginErr.textContent = '';
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  try{
+    await auth.signInWithEmailAndPassword(email, pass);
+  } catch(err){
+    loginErr.textContent = 'Sign-in failed — check your email and password.';
+  }
+});
+
+document.getElementById('logoutBtn').addEventListener('click', ()=> auth.signOut());
+
+auth.onAuthStateChanged(user=>{
+  if(user){
+    loginBox.style.display = 'none';
+    dashboard.style.display = 'block';
+    loadBookings();
+  } else {
+    loginBox.style.display = 'block';
+    dashboard.style.display = 'none';
+  }
+});
+
+async function loadBookings(){
+  const snap = await db.collection('bookings').orderBy('date').orderBy('time').get();
+  allBookings = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  renderStats();
+  renderTable();
+}
+
+function renderStats(){
+  const today = new Date().toISOString().slice(0,10);
+  const upcoming = allBookings.filter(b => b.date >= today && b.status === 'confirmed').length;
+  const total = allBookings.length;
+  const cancelled = allBookings.filter(b => b.status === 'cancelled').length;
+  document.getElementById('statRow').innerHTML = `
+    <div class="stat"><div class="n">${upcoming}</div><div class="l">upcoming, confirmed</div></div>
+    <div class="stat"><div class="n">${total}</div><div class="l">total bookings</div></div>
+    <div class="stat"><div class="n">${cancelled}</div><div class="l">cancelled</div></div>
+  `;
+}
+
+document.getElementById('filters').addEventListener('click', (e)=>{
+  const btn = e.target.closest('button[data-f]');
+  if(!btn) return;
+  currentFilter = btn.dataset.f;
+  document.querySelectorAll('#filters button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTable();
+});
+
+function filteredBookings(){
+  const today = new Date().toISOString().slice(0,10);
+  if(currentFilter === 'upcoming') return allBookings.filter(b => b.date >= today && b.status !== 'cancelled');
+  if(currentFilter === 'all') return allBookings;
+  return allBookings.filter(b => b.status === currentFilter);
+}
+
+function renderTable(){
+  const body = document.getElementById('bookingsBody');
+  const empty = document.getElementById('emptyState');
+  const rows = filteredBookings();
+  if(rows.length === 0){
+    body.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+  body.innerHTML = rows.map(b => `
+    <tr data-id="${b.id}">
+      <td class="code">${b.code || '—'}</td>
+      <td>${escapeHtml(b.name || '')}<br><span class="mono" style="font-size:12px;color:var(--muted);">${escapeHtml(b.phone || '')}</span></td>
+      <td>${escapeHtml(b.serviceName || '')}</td>
+      <td class="mono">${b.date} · ${b.time}</td>
+      <td><span class="status-pill status-${b.status}">${b.status}</span></td>
+      <td style="max-width:220px;">${escapeHtml(b.notes || '—')}</td>
+      <td>
+        <div class="row-actions">
+          ${b.status === 'confirmed' ? `<button class="btn btn-small" data-action="complete" data-id="${b.id}">Mark done</button>` : ''}
+          ${b.status !== 'cancelled' ? `<button class="btn btn-small btn-rust" data-action="cancel" data-id="${b.id}" data-slot="${b.slotId}">Cancel</button>` : ''}
+          <button class="btn btn-small btn-rust" data-action="delete" data-id="${b.id}" data-slot="${b.slotId}">Delete</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function escapeHtml(str){
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+document.getElementById('bookingsBody').addEventListener('click', async (e)=>{
+  const btn = e.target.closest('button[data-action]');
+  if(!btn) return;
+  const id = btn.dataset.id;
+  const slotId = btn.dataset.slot;
+  const action = btn.dataset.action;
+  btn.disabled = true;
+
+  try{
+    if(action === 'complete'){
+      await db.collection('bookings').doc(id).update({ status: 'completed' });
+    } else if(action === 'cancel'){
+      await db.collection('bookings').doc(id).update({ status: 'cancelled' });
+      if(slotId) await db.collection('slots').doc(slotId).update({ status: 'cancelled' }).catch(()=>{});
+    } else if(action === 'delete'){
+      if(!confirm('Permanently delete this booking? This cannot be undone.')) { btn.disabled = false; return; }
+      await db.collection('bookings').doc(id).delete();
+      if(slotId) await db.collection('slots').doc(slotId).delete().catch(()=>{});
+    }
+    await loadBookings();
+  } catch(err){
+    console.error(err);
+    alert('That action failed — check your connection and try again.');
+    btn.disabled = false;
+  }
+});
+</script>
+</body>
+</html>

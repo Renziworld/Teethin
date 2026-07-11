@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cusp & Clove Dental Studio — Benin City</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1c231f;
+    --cream:#f6f1e7;
+    --paper:#fffdf9;
+    --teal:#24463a;
+    --teal-deep:#182f27;
+    --sage:#dce6da;
+    --sage-line:#c3d2c0;
+    --gold:#b8863b;
+    --gold-deep:#93692a;
+    --rust:#a6503a;
+    --muted:#5c645e;
+    --radius:14px;
+    --shadow: 0 12px 30px -14px rgba(28,35,31,0.28);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Fraunces',serif;
+    color:var(--teal-deep);
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  a{color:inherit;}
+  img,svg{display:block;}
+  button{font-family:inherit;cursor:pointer;}
+  :focus-visible{outline:3px solid var(--gold);outline-offset:2px;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    text-transform:uppercase;
+    letter-spacing:0.14em;
+    color:var(--gold-deep);
+    font-weight:600;
+  }
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(246,241,231,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--sage-line);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;}
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand-mark{width:34px;height:34px;flex:none;}
+  .brand-name{font-family:'Fraunces',serif;font-weight:600;font-size:19px;color:var(--teal-deep);}
+  .brand-name em{font-style:italic;color:var(--gold-deep);}
+  nav.links{display:flex;gap:28px;font-size:14.5px;font-weight:500;}
+  nav.links a{text-decoration:none;color:var(--ink);opacity:0.85;}
+  nav.links a:hover{opacity:1;color:var(--teal);}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border-radius:999px;border:1px solid transparent;
+    padding:11px 22px;font-weight:600;font-size:14.5px;
+    transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .btn-gold{background:var(--gold);color:var(--paper);}
+  .btn-gold:hover{background:var(--gold-deep);}
+  .btn-outline{background:transparent;border-color:var(--teal);color:var(--teal);}
+  .btn-outline:hover{background:var(--teal);color:var(--paper);}
+  .btn-ghost{background:transparent;color:var(--teal-deep);text-decoration:underline;padding:0;border-radius:0;}
+  .menu-toggle{display:none;background:none;border:none;padding:8px;}
+  @media (max-width:860px){
+    nav.links{display:none;}
+    .menu-toggle{display:block;}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{padding:64px 0 40px;}
+  .hero-grid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;align-items:start;}
+  @media (max-width:960px){.hero-grid{grid-template-columns:1fr;gap:40px;}}
+  .hero h1{font-size:clamp(34px,4.6vw,54px);line-height:1.05;font-weight:600;}
+  .hero h1 .accent{font-style:italic;color:var(--gold-deep);font-weight:500;}
+  .hero p.lead{margin-top:18px;font-size:17px;max-width:46ch;color:var(--muted);}
+  .hero-cta{display:flex;gap:14px;margin-top:28px;flex-wrap:wrap;}
+  .trust-row{display:flex;gap:32px;margin-top:44px;flex-wrap:wrap;}
+  .trust-item .num{font-family:'IBM Plex Mono',monospace;font-size:24px;font-weight:600;color:var(--teal-deep);}
+  .trust-item .lab{font-size:12.5px;color:var(--muted);margin-top:2px;}
+
+  /* ---------- booking widget ---------- */
+  .booker{
+    background:var(--paper);
+    border:1px solid var(--sage-line);
+    border-radius:20px;
+    box-shadow:var(--shadow);
+    overflow:hidden;
+  }
+  .chart-tabs{display:flex;background:var(--sage);}
+  .chart-tab{
+    flex:1;text-align:center;padding:14px 6px 12px;
+    font-size:12px;font-weight:600;color:var(--muted);
+    border-bottom:3px solid transparent;
+    font-family:'IBM Plex Mono',monospace;
+    letter-spacing:0.03em;
+    position:relative;
+  }
+  .chart-tab .n{display:block;font-size:15px;margin-bottom:2px;}
+  .chart-tab.active{color:var(--teal-deep);border-bottom-color:var(--gold);background:var(--paper);}
+  .chart-tab.done{color:var(--teal);}
+  .booker-body{padding:26px;min-height:340px;}
+  .step-title{font-size:20px;margin-bottom:6px;}
+  .step-sub{color:var(--muted);font-size:14px;margin-bottom:20px;}
+
+  .service-list{display:grid;gap:10px;}
+  .service-card{
+    display:flex;align-items:center;gap:14px;
+    border:1.5px solid var(--sage-line);border-radius:12px;
+    padding:12px 14px;text-align:left;background:var(--paper);
+    transition:border-color .15s, background .15s;
+  }
+  .service-card:hover{border-color:var(--gold);}
+  .service-card.selected{border-color:var(--teal);background:var(--sage);}
+  .service-icon{width:34px;height:34px;flex:none;color:var(--teal);}
+  .service-main{flex:1;}
+  .service-main .name{font-weight:600;font-size:15px;color:var(--ink);}
+  .service-main .desc{font-size:12.5px;color:var(--muted);margin-top:2px;}
+  .service-price{text-align:right;font-family:'IBM Plex Mono',monospace;font-size:13.5px;color:var(--teal-deep);}
+  .service-price .dur{display:block;font-size:11px;color:var(--muted);}
+
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--teal-deep);}
+  .field input, .field textarea{
+    width:100%;padding:11px 13px;border:1.5px solid var(--sage-line);
+    border-radius:10px;font-family:inherit;font-size:14.5px;background:var(--paper);color:var(--ink);
+  }
+  .field input:focus, .field textarea:focus{border-color:var(--teal);}
+  .field textarea{resize:vertical;min-height:70px;}
+  .field.error input, .field.error textarea{border-color:var(--rust);}
+  .field .err-msg{color:var(--rust);font-size:12px;margin-top:5px;display:none;}
+  .field.error .err-msg{display:block;}
+
+  .slot-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:8px;margin-top:10px;}
+  .slot-btn{
+    border:1.5px solid var(--sage-line);background:var(--paper);border-radius:9px;
+    padding:9px 4px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink);
+  }
+  .slot-btn:hover:not(:disabled){border-color:var(--gold);}
+  .slot-btn.selected{background:var(--teal);color:var(--paper);border-color:var(--teal);}
+  .slot-btn:disabled{opacity:0.35;text-decoration:line-through;cursor:not-allowed;}
+  .empty-note{font-size:13.5px;color:var(--muted);padding:10px 0;}
+
+  .summary-box{
+    background:var(--sage);border-radius:12px;padding:14px 16px;margin-bottom:18px;
+    font-size:13.5px;
+  }
+  .summary-box .row{display:flex;justify-content:space-between;padding:3px 0;}
+  .summary-box .row .k{color:var(--muted);}
+  .summary-box .row .v{font-weight:600;color:var(--teal-deep);font-family:'IBM Plex Mono',monospace;font-size:13px;}
+
+  .booker-actions{display:flex;justify-content:space-between;align-items:center;padding:0 26px 26px;}
+
+  .confirm-panel{text-align:center;padding:6px 0 4px;}
+  .confirm-panel .code{
+    font-family:'IBM Plex Mono',monospace;font-size:26px;letter-spacing:0.06em;
+    color:var(--teal-deep);background:var(--sage);border-radius:10px;
+    padding:12px 18px;display:inline-block;margin:14px 0 20px;
+  }
+  .tick{width:52px;height:52px;margin:0 auto 10px;color:var(--teal);}
+
+  /* ---------- services strip ---------- */
+  .section{padding:76px 0;}
+  .section-head{max-width:640px;margin-bottom:40px;}
+  .section-head h2{font-size:clamp(26px,3.2vw,36px);margin-top:8px;font-weight:600;}
+  .section-head p{color:var(--muted);margin-top:12px;font-size:15.5px;}
+
+  .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  @media (max-width:860px){.services-grid{grid-template-columns:1fr 1fr;}}
+  @media (max-width:560px){.services-grid{grid-template-columns:1fr;}}
+  .svc-tile{
+    background:var(--paper);border:1px solid var(--sage-line);border-radius:16px;
+    padding:24px 22px;
+  }
+  .svc-tile .service-icon{width:30px;height:30px;color:var(--gold-deep);margin-bottom:14px;}
+  .svc-tile h3{font-size:17px;font-weight:600;margin-bottom:6px;}
+  .svc-tile p{font-size:13.5px;color:var(--muted);margin:0;}
+  .svc-tile .price-line{margin-top:12px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--teal-deep);}
+
+  /* ---------- team ---------- */
+  .team-strip{background:var(--teal-deep);color:var(--cream);}
+  .team-strip .section-head h2, .team-strip .eyebrow{color:var(--cream);}
+  .team-strip .section-head p{color:#b9c4bd;}
+  .team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  @media (max-width:860px){.team-grid{grid-template-columns:1fr;}}
+  .team-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:22px;}
+  .team-card .avatar{
+    width:52px;height:52px;border-radius:50%;background:var(--gold);
+    display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;
+    font-weight:600;font-size:18px;color:var(--teal-deep);margin-bottom:14px;
+  }
+  .team-card h3{color:var(--cream);font-size:17px;font-weight:600;}
+  .team-card .role{font-family:'IBM Plex Mono',monospace;font-size:12px;color:#d9b877;margin:4px 0 10px;}
+  .team-card p{font-size:13.5px;color:#c7d0c9;margin:0;}
+
+  /* ---------- how it works ---------- */
+  .timeline{display:flex;gap:0;border-top:1px solid var(--sage-line);border-bottom:1px solid var(--sage-line);}
+  .tl-step{flex:1;padding:24px 20px;border-left:1px solid var(--sage-line);}
+  .tl-step:first-child{border-left:none;}
+  @media (max-width:760px){.timeline{flex-direction:column;}.tl-step{border-left:none;border-top:1px solid var(--sage-line);}.tl-step:first-child{border-top:none;}}
+  .tl-step .tag{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--gold-deep);}
+  .tl-step h3{font-size:16.5px;margin:8px 0 6px;font-weight:600;}
+  .tl-step p{font-size:13.5px;color:var(--muted);margin:0;}
+
+  /* ---------- testimonials ---------- */
+  .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  @media (max-width:860px){.testi-grid{grid-template-columns:1fr;}}
+  .testi-card{background:var(--sage);border-radius:16px;padding:22px;}
+  .testi-card p.quote{font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--teal-deep);margin:0 0 14px;}
+  .testi-card .who{font-size:12.5px;color:var(--muted);font-family:'IBM Plex Mono',monospace;}
+
+  /* ---------- faq ---------- */
+  .faq-item{border-bottom:1px solid var(--sage-line);}
+  .faq-q{
+    width:100%;text-align:left;background:none;border:none;padding:18px 0;
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:15.5px;font-weight:600;color:var(--teal-deep);
+  }
+  .faq-q .plus{transition:transform .2s;color:var(--gold-deep);font-size:20px;}
+  .faq-item.open .faq-q .plus{transform:rotate(45deg);}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .25s ease;}
+  .faq-a p{padding-bottom:16px;color:var(--muted);font-size:14px;margin:0;max-width:60ch;}
+
+  /* ---------- my appointments ---------- */
+  .mybar{background:var(--paper);border:1px dashed var(--sage-line);border-radius:16px;padding:20px 22px;}
+  .mybar h3{font-size:16px;margin-bottom:12px;}
+  .appt-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--sage-line);flex-wrap:wrap;}
+  .appt-row:first-of-type{border-top:none;}
+  .appt-row .info{font-size:13.5px;}
+  .appt-row .info .code{font-family:'IBM Plex Mono',monospace;color:var(--teal-deep);font-weight:600;}
+  .appt-row .actions{display:flex;gap:10px;}
+  .link-btn{background:none;border:none;font-size:12.5px;font-weight:600;text-decoration:underline;padding:0;}
+  .link-btn.cancel{color:var(--rust);}
+  .link-btn.ics{color:var(--teal);}
+  .no-appts{color:var(--muted);font-size:13.5px;}
+
+  /* ---------- footer ---------- */
+  footer{background:var(--teal-deep);color:#c7d0c9;padding:56px 0 28px;}
+  .foot-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:36px;}
+  @media (max-width:760px){.foot-grid{grid-template-columns:1fr;}}
+  footer h4{color:var(--cream);font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:14px;}
+  footer .brand-name{color:var(--cream);}
+  footer p, footer a{font-size:13.5px;line-height:1.8;text-decoration:none;}
+  .foot-bottom{border-top:1px solid rgba(255,255,255,0.12);margin-top:40px;padding-top:20px;font-size:12.5px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;color:#8fa098;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav wrap">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 40 40" fill="none"><path d="M20 4c-4.5 0-6 2.6-9 2.6-3.6 0-6.5 3-6.5 8 0 4 1.3 8.6 2.6 12.4C8.2 30.6 9.6 35 12.4 35c2.4 0 2.9-4.6 4-8.4.7-2.4 1.4-3.6 3.6-3.6s2.9 1.2 3.6 3.6c1.1 3.8 1.6 8.4 4 8.4 2.8 0 4.2-4.4 5.3-8 1.3-3.8 2.6-8.4 2.6-12.4 0-5-2.9-8-6.5-8-3 0-4.5-2.6-9-2.6z" fill="#24463a"/></svg>
+      <span class="brand-name">Cusp <em>&</em> Clove</span>
+    </div>
+    <nav class="links">
+      <a href="#services">Care</a>
+      <a href="#team">Dentists</a>
+      <a href="#how">How it works</a>
+      <a href="#stories">Stories</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a href="#book" class="btn btn-gold">Book a visit</a>
+  </div>
+</header>
+
+<div id="configWarning" style="display:none;background:#a6503a;color:#fff;text-align:center;padding:10px 16px;font-size:13.5px;font-weight:600;">
+  Firebase isn't connected yet — bookings won't save. Add your project config near the top of the script.
+</div>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">GRA Extension, Benin City</p>
+      <h1>Dental care that keeps its <span class="accent">word</span> —<br>and your appointment on time.</h1>
+      <p class="lead">Cusp & Clove is a small studio practice built around unhurried checkups, clear pricing in naira, and a chair that's actually free when we say it is.</p>
+      <div class="hero-cta">
+        <a href="#book" class="btn btn-gold">Book an appointment</a>
+        <a href="#services" class="btn btn-outline">See our care menu</a>
+      </div>
+      <div class="trust-row">
+        <div class="trust-item"><div class="num">4.9<span style="font-size:14px;">/5</span></div><div class="lab">from 300+ patients</div></div>
+        <div class="trust-item"><div class="num">15+</div><div class="lab">years, combined chairside</div></div>
+        <div class="trust-item"><div class="num">48hr</div><div class="lab">average booking to seat</div></div>
+      </div>
+    </div>
+
+    <div class="booker" id="book">
+      <div class="chart-tabs" id="chartTabs"></div>
+      <div class="booker-body" id="bookerBody"></div>
+      <div class="booker-actions" id="bookerActions"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Care menu</p>
+      <h2>Every price, upfront.</h2>
+      <p>No surprise line items at checkout. Pick a service below and it carries straight through to booking.</p>
+    </div>
+    <div class="services-grid" id="serviceTiles"></div>
+  </div>
+</section>
+
+<section class="section team-strip" id="team">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Behind the mask</p>
+      <h2>Three dentists, one chair philosophy.</h2>
+      <p>Slower appointments, plainer explanations, and a genuine answer when you ask "do I really need this?"</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="avatar">OI</div>
+        <h3>Dr. Osayi Iredia</h3>
+        <div class="role">Lead Dentist · General & Restorative</div>
+        <p>Eleven years in general practice. Believes most fillings can wait for the right appointment, not the first one.</p>
+      </div>
+      <div class="team-card">
+        <div class="avatar">FN</div>
+        <h3>Dr. Faith Nosa</h3>
+        <div class="role">Cosmetic & Whitening</div>
+        <p>Trained in Lagos and Lisbon. Runs the whitening and veneer consults, and the studio's most-booked Saturday slot.</p>
+      </div>
+      <div class="team-card">
+        <div class="avatar">TE</div>
+        <h3>Dr. Tega Erhabor</h3>
+        <div class="role">Paediatric & Emergency</div>
+        <p>Handles the under-12 chair and same-day emergencies — the person you want on the phone at 7am with a swollen jaw.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">The chart, in four moves</p>
+      <h2>How a booking actually happens.</h2>
+    </div>
+    <div class="timeline">
+      <div class="tl-step"><span class="tag">STEP 01</span><h3>Choose your care</h3><p>Cleaning, whitening, a filling, or "I'm not sure yet" — the widget above prices it for you instantly.</p></div>
+      <div class="tl-step"><span class="tag">STEP 02</span><h3>Pick a real slot</h3><p>You're only shown chairs that are genuinely open that day — nothing gets double-booked behind the scenes.</p></div>
+      <div class="tl-step"><span class="tag">STEP 03</span><h3>Leave your details</h3><p>A phone number and name is all we need to hold the chair. Notes are optional but help the dentist prep.</p></div>
+      <div class="tl-step"><span class="tag">STEP 04</span><h3>Get your code</h3><p>A confirmation code appears immediately, with an option to add the visit straight to your calendar.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="stories">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">From the waiting room</p>
+      <h2>What recent patients said.</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card"><p class="quote">"Booked on a Tuesday night, seen Thursday morning. No call needed."</p><div class="who">— A. Omoregie, cleaning</div></div>
+      <div class="testi-card"><p class="quote">"First dentist who told me to wait six months before a crown instead of selling me one."</p><div class="who">— K. Ediae, checkup</div></div>
+      <div class="testi-card"><p class="quote">"My son actually asked to go back. That's the whole review."</p><div class="who">— B. Uwagboe, paediatric</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="faq">
+  <div class="wrap" style="max-width:820px;">
+    <div class="section-head">
+      <p class="eyebrow">Before you book</p>
+      <h2>Quick answers.</h2>
+    </div>
+    <div id="faqList"></div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+  <div class="wrap">
+    <div class="mybar">
+      <h3>Your appointments this session</h3>
+      <div id="myAppts"><p class="no-appts">Nothing booked yet — confirmed visits will appear here with a code you can cancel or save.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div>
+      <div class="brand" style="margin-bottom:14px;">
+        <svg class="brand-mark" viewBox="0 0 40 40" fill="none"><path d="M20 4c-4.5 0-6 2.6-9 2.6-3.6 0-6.5 3-6.5 8 0 4 1.3 8.6 2.6 12.4C8.2 30.6 9.6 35 12.4 35c2.4 0 2.9-4.6 4-8.4.7-2.4 1.4-3.6 3.6-3.6s2.9 1.2 3.6 3.6c1.1 3.8 1.6 8.4 4 8.4 2.8 0 4.2-4.4 5.3-8 1.3-3.8 2.6-8.4 2.6-12.4 0-5-2.9-8-6.5-8-3 0-4.5-2.6-9-2.6z" fill="#f6f1e7"/></svg>
+        <span class="brand-name">Cusp & Clove</span>
+      </div>
+      <p>A small studio dental practice in GRA Extension, Benin City, Edo State. Built on the idea that your appointment time is a promise, not a suggestion.</p>
+    </div>
+    <div>
+      <h4>Visit</h4>
+      <p>14 Reservation Road, off Airport Road<br>GRA Extension, Benin City<br>Edo State, Nigeria</p>
+      <p><a href="tel:+2348012345678">+234 801 234 5678</a><br><a href="mailto:hello@cuspandclove.ng">hello@cuspandclove.ng</a></p>
+    </div>
+    <div>
+      <h4>Hours (WAT)</h4>
+      <p class="mono">Mon – Fri&nbsp; 09:00 – 17:00<br>Saturday&nbsp;&nbsp; 09:00 – 13:00<br>Sunday&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Closed</p>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <span>© 2026 Cusp & Clove Dental Studio.</span>
+    <span>Appointments are saved securely and reviewed by our team before your visit.</span>
+  </div>
+</footer>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+/* ---------------- Firebase ---------------- */
+// 1. Go to https://console.firebase.google.com → create a project (or reuse an existing one).
+// 2. Build > Firestore Database > Create database (start in production mode).
+// 3. Project settings (gear icon) > General > "Your apps" > Add app > Web (</>) > copy the config object below.
+// 4. Paste your real values here, replacing every "REPLACE_ME".
+const firebaseConfig = {
+  apiKey: "AIzaSyBn8pjNEiv5f9Mfyjpltc6Cssv78VYDfWU",
+  authDomain: "teething-bfb01.firebaseapp.com",
+  projectId: "teething-bfb01",
+  storageBucket: "teething-bfb01.firebasestorage.app",
+  messagingSenderId: "126608909426",
+  appId: "1:126608909426:web:d650413fe5612ed2d10eeb"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const FIREBASE_READY = firebaseConfig.apiKey !== "REPLACE_ME";
+</script>
+
+<script>
+/* ---------------- data ---------------- */
+const ICONS = {
+  cleaning: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3c-2.2 0-3 1.3-4.5 1.3-1.8 0-3.2 1.5-3.2 4 0 2 .6 4.3 1.3 6.2.5 1.4 1.2 3.5 2.6 3.5s1.4-2.3 2-4.2c.3-1.2.7-1.8 1.8-1.8s1.5.6 1.8 1.8c.6 1.9.8 4.2 2 4.2s2.1-2.1 2.6-3.5c.7-1.9 1.3-4.2 1.3-6.2 0-2.5-1.4-4-3.2-4C15 4.3 14.2 3 12 3z"/></svg>',
+  whitening:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l1.8 3.6L18 8l-3.6 1.8L12 14l-1.8-4.2L6 8l4.2-1.4L12 3z"/><path d="M5 15l.9 1.8L8 18l-2.1.9L5 21l-.9-2.1L2 18l2.1-1.2z"/></svg>',
+  checkup:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/><path d="M8 11l2 2 4-4"/></svg>',
+  filling:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12c0-4.4 3.6-8 8-8s8 3.6 8 8-3.6 8-8 8"/><path d="M12 8v8M8 12h8" stroke-dasharray="0"/></svg>',
+  emergency:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l9 16H3L12 2z"/><path d="M12 9v4M12 16h.01"/></svg>',
+  consult:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 11.5a8.4 8.4 0 01-8.9 8.4 8.6 8.6 0 01-3.8-.9L3 20l1.2-5.1a8.4 8.4 0 116.7-11.3 8.4 8.4 0 0110.1 7.9z"/></svg>'
+};
+
+const SERVICES = [
+  {id:'cleaning', name:'Routine Cleaning', dur:30, price:15000, desc:'Scale, polish, and a straight answer on flossing.', icon:'cleaning'},
+  {id:'checkup', name:'Full Checkup', dur:30, price:10000, desc:'Exam, X-ray review if needed, and a written plan.', icon:'checkup'},
+  {id:'whitening', name:'Professional Whitening', dur:60, price:55000, desc:'In-chair whitening, roughly 2–3 shades in one visit.', icon:'whitening'},
+  {id:'filling', name:'Filling / Restoration', dur:45, price:25000, desc:'Composite fillings, quoted exactly after the exam.', icon:'filling'},
+  {id:'emergency', name:'Emergency Visit', dur:30, price:20000, desc:'Pain, breaks, or swelling — seen the same or next day.', icon:'emergency'},
+  {id:'consult', name:'New Patient Consult', dur:20, price:5000, desc:'First visit orientation and a full mouth assessment.', icon:'consult'}
+];
+
+const FAQS = [
+  {q:'Do I need to pay online to book?', a:'No. Booking here only reserves your chair — payment happens at the studio after your visit, cash or transfer.'},
+  {q:'Can I book for someone else, like my child?', a:'Yes — just enter the patient\'s name in the details step and a contact number we can reach for confirmation.'},
+  {q:'What if I need to cancel?', a:'Appointments booked in this session show up at the bottom of the page with a cancel option. For visits booked on a previous visit to the site, call the studio directly.'},
+  {q:'Is Saturday available for all services?', a:'Whitening and cleaning run every Saturday morning. Fillings and emergencies are seen Saturday on a case-by-case basis — the slot grid will only show what\'s genuinely open.'}
+];
+
+/* ---------------- state ---------------- */
+let step = 1; // 1 service, 2 date/time, 3 details, 4 confirm
+let selection = { service:null, date:null, time:null, name:'', phone:'', email:'', notes:'' };
+let myBookings = []; // this browser session's confirmed bookings, backed by Firestore
+let lastConfirmed = null;
+
+if(!FIREBASE_READY){
+  document.getElementById('configWarning').style.display = 'block';
+}
+
+const bookerBody = document.getElementById('bookerBody');
+const bookerActions = document.getElementById('bookerActions');
+const chartTabs = document.getElementById('chartTabs');
+
+const TAB_LABELS = ['Service','Date & Time','Details','Confirmed'];
+
+function money(n){ return '₦' + n.toLocaleString('en-NG'); }
+
+function renderTabs(){
+  chartTabs.innerHTML = TAB_LABELS.map((label,i)=>{
+    const num = i+1;
+    let cls = 'chart-tab';
+    if(num === step) cls += ' active';
+    else if(num < step) cls += ' done';
+    return `<div class="${cls}"><span class="n">${String(num).padStart(2,'0')}</span>${label}</div>`;
+  }).join('');
+}
+
+function renderActions(){
+  let html = '';
+  if(step === 1){
+    html = `<span></span><button class="btn btn-gold" id="nextBtn" ${selection.service ? '' : 'disabled style="opacity:.45;cursor:not-allowed;"'}>Continue</button>`;
+  } else if(step === 2){
+    html = `<button class="btn btn-outline" id="backBtn">Back</button><button class="btn btn-gold" id="nextBtn" ${selection.date && selection.time ? '' : 'disabled style="opacity:.45;cursor:not-allowed;"'}>Continue</button>`;
+  } else if(step === 3){
+    html = `<button class="btn btn-outline" id="backBtn">Back</button><button class="btn btn-gold" id="nextBtn">Confirm booking</button>`;
+  } else {
+    html = `<button class="btn btn-outline" id="restartBtn">Book another visit</button><span></span>`;
+  }
+  bookerActions.innerHTML = html;
+
+  const nextBtn = document.getElementById('nextBtn');
+  const backBtn = document.getElementById('backBtn');
+  const restartBtn = document.getElementById('restartBtn');
+  if(nextBtn) nextBtn.addEventListener('click', onNext);
+  if(backBtn) backBtn.addEventListener('click', ()=>{ step--; renderAll(); });
+  if(restartBtn) restartBtn.addEventListener('click', ()=>{
+    selection = { service:null, date:null, time:null, name:'', phone:'', email:'', notes:'' };
+    step = 1; renderAll();
+  });
+}
+
+async function onNext(){
+  if(step === 3){
+    if(!validateDetails()) return;
+    if(!FIREBASE_READY){
+      alert('Firebase isn\'t connected yet, so this booking can\'t be saved. Add your project config in the code first.');
+      return;
+    }
+    const nextBtn = document.getElementById('nextBtn');
+    nextBtn.disabled = true;
+    nextBtn.textContent = 'Saving…';
+    try{
+      await confirmBooking();
+      step = 4;
+    } catch(err){
+      if(err.message === 'SLOT_TAKEN'){
+        alert('Sorry — that time was just booked by someone else. Please pick another slot.');
+        selection.time = null;
+        step = 2;
+      } else {
+        console.error(err);
+        alert('Could not save your booking. Check your internet connection and try again.');
+      }
+    }
+  } else {
+    step++;
+  }
+  renderAll();
+}
+
+/* ---- step 1: service ---- */
+function renderStep1(){
+  bookerBody.innerHTML = `
+    <div class="step-title">What are you coming in for?</div>
+    <div class="step-sub">Prices include exam time. Duration determines the slots you'll see next.</div>
+    <div class="service-list" id="serviceList"></div>
+  `;
+  const list = document.getElementById('serviceList');
+  list.innerHTML = SERVICES.map(s => `
+    <button type="button" class="service-card ${selection.service && selection.service.id===s.id ? 'selected':''}" data-id="${s.id}">
+      <span class="service-icon">${ICONS[s.icon]}</span>
+      <span class="service-main"><span class="name">${s.name}</span><span class="desc">${s.desc}</span></span>
+      <span class="service-price">${money(s.price)}<span class="dur">${s.dur} min</span></span>
+    </button>
+  `).join('');
+  list.querySelectorAll('.service-card').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      selection.service = SERVICES.find(s=>s.id===btn.dataset.id);
+      renderStep1(); renderActions();
+    });
+  });
+}
+
+/* ---- step 2: date & time ---- */
+function pad(n){ return String(n).padStart(2,'0'); }
+function todayISO(){ const d = new Date(); return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`; }
+
+function slotsForDate(dateStr){
+  const day = new Date(dateStr + 'T00:00:00').getDay(); // 0 Sun - 6 Sat
+  if(day === 0) return [];
+  const open = 9, close = day === 6 ? 13 : 17;
+  const slots = [];
+  for(let h=open; h<close; h++){
+    slots.push(`${pad(h)}:00`);
+    slots.push(`${pad(h)}:30`);
+  }
+  return slots;
+}
+
+function renderStep2(){
+  const min = todayISO();
+  bookerBody.innerHTML = `
+    <div class="step-title">Pick a day and time</div>
+    <div class="step-sub">${selection.service.name} · ${selection.service.dur} min · ${money(selection.service.price)}</div>
+    <div class="field">
+      <label for="dateInput">Date</label>
+      <input type="date" id="dateInput" min="${min}" value="${selection.date || ''}">
+    </div>
+    <div id="slotArea"></div>
+  `;
+  const dateInput = document.getElementById('dateInput');
+  dateInput.addEventListener('change', ()=>{
+    selection.date = dateInput.value;
+    selection.time = null;
+    renderSlotArea();
+    renderActions();
+  });
+  if(selection.date) renderSlotArea();
+}
+
+async function getTakenTimes(date){
+  const snap = await db.collection('slots')
+    .where('date', '==', date)
+    .where('status', '==', 'active')
+    .get();
+  return snap.docs.map(d => d.data().time);
+}
+
+async function renderSlotArea(){
+  const area = document.getElementById('slotArea');
+  if(!selection.date){ area.innerHTML=''; return; }
+  const day = new Date(selection.date + 'T00:00:00').getDay();
+  if(day === 0){
+    area.innerHTML = `<p class="empty-note">We're closed Sundays — pick another day.</p>`;
+    return;
+  }
+  if(!FIREBASE_READY){
+    area.innerHTML = `<p class="empty-note">Firebase isn't connected yet, so live availability can't load.</p>`;
+    return;
+  }
+  const requestedDate = selection.date;
+  area.innerHTML = `<label>Available times</label><p class="empty-note">Loading available times…</p>`;
+  const all = slotsForDate(requestedDate);
+  let taken = [];
+  try{
+    taken = await getTakenTimes(requestedDate);
+  } catch(err){
+    console.error(err);
+    area.innerHTML = `<p class="empty-note">Couldn't load availability — check your connection and try again.</p>`;
+    return;
+  }
+  if(selection.date !== requestedDate) return; // user changed the date while this was loading
+  area.innerHTML = `<label>Available times</label><div class="slot-grid" id="slotGrid"></div>`;
+  const grid = document.getElementById('slotGrid');
+  grid.innerHTML = all.map(t=>{
+    const isTaken = taken.includes(t);
+    const isSel = selection.time === t;
+    return `<button type="button" class="slot-btn ${isSel?'selected':''}" data-t="${t}" ${isTaken?'disabled':''}>${t}</button>`;
+  }).join('');
+  if(all.length === 0){
+    area.innerHTML += `<p class="empty-note">No slots defined for that day.</p>`;
+  }
+  grid.querySelectorAll('.slot-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      selection.time = btn.dataset.t;
+      renderSlotArea();
+      renderActions();
+    });
+  });
+}
+
+/* ---- step 3: details ---- */
+function renderStep3(){
+  bookerBody.innerHTML = `
+    <div class="step-title">A few details</div>
+    <div class="step-sub">We'll use these to hold your chair and send a reminder.</div>
+    <div class="summary-box">
+      <div class="row"><span class="k">Service</span><span class="v">${selection.service.name}</span></div>
+      <div class="row"><span class="k">Date</span><span class="v">${selection.date}</span></div>
+      <div class="row"><span class="k">Time</span><span class="v">${selection.time}</span></div>
+      <div class="row"><span class="k">Est. cost</span><span class="v">${money(selection.service.price)}</span></div>
+    </div>
+    <div class="field" id="f-name"><label for="nameInput">Patient name</label><input id="nameInput" type="text" value="${selection.name}" placeholder="e.g. Osaretin Amadin"><div class="err-msg">Please enter a name.</div></div>
+    <div class="field" id="f-phone"><label for="phoneInput">Phone number</label><input id="phoneInput" type="tel" value="${selection.phone}" placeholder="080X XXX XXXX"><div class="err-msg">Please enter a valid Nigerian phone number.</div></div>
+    <div class="field" id="f-email"><label for="emailInput">Email (optional)</label><input id="emailInput" type="email" value="${selection.email}" placeholder="you@email.com"><div class="err-msg">That email doesn't look right.</div></div>
+    <div class="field"><label for="notesInput">Notes for the dentist (optional)</label><textarea id="notesInput" placeholder="Any pain, allergies, or previous work we should know about">${selection.notes}</textarea></div>
+  `;
+  document.getElementById('nameInput').addEventListener('input', e=> selection.name = e.target.value);
+  document.getElementById('phoneInput').addEventListener('input', e=> selection.phone = e.target.value);
+  document.getElementById('emailInput').addEventListener('input', e=> selection.email = e.target.value);
+  document.getElementById('notesInput').addEventListener('input', e=> selection.notes = e.target.value);
+}
+
+function validateDetails(){
+  let ok = true;
+  const nameField = document.getElementById('f-name');
+  const phoneField = document.getElementById('f-phone');
+  const emailField = document.getElementById('f-email');
+  nameField.classList.toggle('error', selection.name.trim().length < 2);
+  if(selection.name.trim().length < 2) ok = false;
+
+  const phoneOk = /^[0-9+()\-\s]{7,15}$/.test(selection.phone.trim());
+  phoneField.classList.toggle('error', !phoneOk);
+  if(!phoneOk) ok = false;
+
+  const emailOk = selection.email.trim() === '' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(selection.email.trim());
+  emailField.classList.toggle('error', !emailOk);
+  if(!emailOk) ok = false;
+
+  return ok;
+}
+
+/* ---- step 4: confirm ---- */
+function genCode(){
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let s = 'CC-';
+  for(let i=0;i<6;i++) s += chars[Math.floor(Math.random()*chars.length)];
+  return s;
+}
+
+async function confirmBooking(){
+  const slotId = `${selection.date}_${selection.time}`;
+  const slotRef = db.collection('slots').doc(slotId);
+
+  // This write only succeeds if the slot doc doesn't already exist — enforced by
+  // the Firestore security rules, so two people can't grab the same chair at once.
+  try{
+    await slotRef.set({
+      date: selection.date,
+      time: selection.time,
+      serviceId: selection.service.id,
+      status: 'active'
+    });
+  } catch(err){
+    if(err.code === 'permission-denied'){
+      throw new Error('SLOT_TAKEN');
+    }
+    throw err;
+  }
+
+  const code = genCode();
+  const bookingRef = db.collection('bookings').doc();
+  await bookingRef.set({
+    code,
+    serviceId: selection.service.id,
+    serviceName: selection.service.name,
+    date: selection.date,
+    time: selection.time,
+    name: selection.name,
+    phone: selection.phone,
+    email: selection.email || '',
+    notes: selection.notes || '',
+    status: 'confirmed',
+    slotId,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  });
+
+  const booking = {
+    id: bookingRef.id,
+    slotId,
+    code,
+    service: selection.service,
+    date: selection.date,
+    time: selection.time,
+    name: selection.name,
+    phone: selection.phone,
+    email: selection.email,
+    notes: selection.notes
+  };
+  myBookings.push(booking);
+  lastConfirmed = booking;
+  renderMyAppointments();
+}
+
+function renderStep4(){
+  const b = lastConfirmed;
+  bookerBody.innerHTML = `
+    <div class="confirm-panel">
+      <svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9"/></svg>
+      <div class="step-title">You're on the chart.</div>
+      <div class="step-sub">Bring this code when you arrive — no printing needed.</div>
+      <div class="code">${b.code}</div>
+      <div class="summary-box" style="text-align:left;">
+        <div class="row"><span class="k">Patient</span><span class="v">${b.name}</span></div>
+        <div class="row"><span class="k">Service</span><span class="v">${b.service.name}</span></div>
+        <div class="row"><span class="k">When</span><span class="v">${b.date} · ${b.time}</span></div>
+      </div>
+      <button class="btn btn-outline" id="icsBtn" style="width:100%;">Add to calendar (.ics)</button>
+    </div>
+  `;
+  document.getElementById('icsBtn').addEventListener('click', ()=> downloadICS(b));
+}
+
+function downloadICS(b){
+  const [h,m] = b.time.split(':').map(Number);
+  const start = new Date(b.date + 'T00:00:00');
+  start.setHours(h, m, 0, 0);
+  const end = new Date(start.getTime() + b.service.dur*60000);
+  const fmt = d => d.toISOString().replace(/[-:]/g,'').split('.')[0]+'Z';
+  const ics = [
+    'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Cusp and Clove//Booking//EN','BEGIN:VEVENT',
+    `UID:${b.code}@cuspandclove.ng`,
+    `DTSTAMP:${fmt(new Date())}`,
+    `DTSTART:${fmt(start)}`,
+    `DTEND:${fmt(end)}`,
+    `SUMMARY:${b.service.name} — Cusp & Clove Dental`,
+    `DESCRIPTION:Confirmation code ${b.code}. Patient: ${b.name}.`,
+    'LOCATION:14 Reservation Road, GRA Extension, Benin City',
+    'END:VEVENT','END:VCALENDAR'
+  ].join('\r\n');
+  const blob = new Blob([ics], {type:'text/calendar'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `cusp-clove-${b.code}.ics`;
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+}
+
+/* ---- my appointments panel ---- */
+function renderMyAppointments(){
+  const wrap = document.getElementById('myAppts');
+  if(myBookings.length === 0){
+    wrap.innerHTML = `<p class="no-appts">Nothing booked yet — confirmed visits will appear here with a code you can cancel or save.</p>`;
+    return;
+  }
+  wrap.innerHTML = myBookings.map(b => `
+    <div class="appt-row" data-id="${b.id}">
+      <div class="info"><span class="code">${b.code}</span> — ${b.service.name}, ${b.date} at ${b.time}</div>
+      <div class="actions">
+        <button class="link-btn ics" data-action="ics" data-id="${b.id}">Save .ics</button>
+        <button class="link-btn cancel" data-action="cancel" data-id="${b.id}">Cancel</button>
+      </div>
+    </div>
+  `).join('');
+  wrap.querySelectorAll('[data-action="cancel"]').forEach(btn=>{
+    btn.addEventListener('click', async ()=>{
+      const id = btn.dataset.id;
+      const b = myBookings.find(x=>String(x.id)===String(id));
+      if(!b) return;
+      btn.disabled = true;
+      btn.textContent = 'Cancelling…';
+      try{
+        await db.collection('bookings').doc(b.id).update({ status: 'cancelled' });
+        await db.collection('slots').doc(b.slotId).update({ status: 'cancelled' });
+        myBookings = myBookings.filter(x=>x.id!==b.id);
+        renderMyAppointments();
+        if(step === 2) renderSlotArea();
+      } catch(err){
+        console.error(err);
+        alert('Could not cancel — check your connection and try again, or call the studio directly.');
+        btn.disabled = false;
+        btn.textContent = 'Cancel';
+      }
+    });
+  });
+  wrap.querySelectorAll('[data-action="ics"]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const id = btn.dataset.id;
+      const b = myBookings.find(x=>String(x.id)===String(id));
+      if(b) downloadICS(b);
+    });
+  });
+}
+
+function renderAll(){
+  renderTabs();
+  if(step===1) renderStep1();
+  else if(step===2) renderStep2();
+  else if(step===3) renderStep3();
+  else renderStep4();
+  renderActions();
+}
+
+/* ---------------- services grid (below hero) ---------------- */
+document.getElementById('serviceTiles').innerHTML = SERVICES.map(s=>`
+  <div class="svc-tile">
+    <span class="service-icon">${ICONS[s.icon]}</span>
+    <h3>${s.name}</h3>
+    <p>${s.desc}</p>
+    <div class="price-line">${money(s.price)} · ${s.dur} min</div>
+  </div>
+`).join('');
+
+/* ---------------- FAQ ---------------- */
+document.getElementById('faqList').innerHTML = FAQS.map((f,i)=>`
+  <div class="faq-item" data-i="${i}">
+    <button class="faq-q" type="button">${f.q}<span class="plus">+</span></button>
+    <div class="faq-a"><p>${f.a}</p></div>
+  </div>
+`).join('');
+document.querySelectorAll('.faq-item').forEach(item=>{
+  const q = item.querySelector('.faq-q');
+  const a = item.querySelector('.faq-a');
+  q.addEventListener('click', ()=>{
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(other=>{
+      other.classList.remove('open');
+      other.querySelector('.faq-a').style.maxHeight = null;
+    });
+    if(!isOpen){
+      item.classList.add('open');
+      a.style.maxHeight = a.scrollHeight + 'px';
+    }
+  });
+});
+
+/* ---------------- init ---------------- */
+renderAll();
+</script>
+
+</body>
+</html>
